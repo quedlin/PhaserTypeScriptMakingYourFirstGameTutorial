@@ -10,19 +10,19 @@ class SimpleGame {
 
     score: number;
     scoreText: Phaser.Text;
-
+    
     constructor() {        
-        this.game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: this.preload, create: this.create, update: this.update, collectStar: this.collectStar });
+        this.game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: this.preload, create: this.create, update: this.update, collectStar: this.collectStar });        
     }
     
-    preload() {
+    preload = () => {
         this.game.load.image('sky', 'assets/sky.png');
         this.game.load.image('ground', 'assets/platform.png');
         this.game.load.image('star', 'assets/star.png');
         this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
     }
     
-    create() {
+    create = () => {
         this.game.add.sprite(0, 0, 'star');
 
 
@@ -102,7 +102,7 @@ class SimpleGame {
     }
 
 
-    update() {
+    update = () => {
 
         //  Collide the player and the stars with the platforms
         var hitPlatform = this.game.physics.arcade.collide(this.player, this.platforms);
@@ -137,7 +137,7 @@ class SimpleGame {
     }
 
 
-    collectStar(player: Phaser.Sprite, star: Phaser.Sprite) {
+    collectStar = (player: Phaser.Sprite, star: Phaser.Sprite) => {
 
         // Removes the star from the screen
         star.kill();
@@ -148,11 +148,36 @@ class SimpleGame {
 
     }
 
+
+    wat = () => {
+
+        console.debug("pakk");
+
+        //  Here we'll create 12 of them evenly spaced apart
+        for (var i = 0; i < 12; i++) {
+            //  Create a star inside of the 'stars' group
+            var star = this.stars.create(i * 70, 0, 'star');
+
+            //  Let gravity do its thing
+            star.body.gravity.y = 40;
+
+            //  This just gives each star a slightly random bounce value
+            star.body.bounce.y = 0.7 + Math.random() * 0.2;
+        }
+
+    }
+
+    
+
 }
 
 
 window.onload = () => {
 
     var game = new SimpleGame();
+
+    var button = document.getElementById("clickMe");
+    button.onclick = (e) => { game.wat(); }
  
 };
+
